@@ -1,0 +1,61 @@
+<mvc:View controllerName="list.controller.Details" 
+          xmlns="sap.m" 
+          xmlns:core="sap.ui.core" 
+          xmlns:layout="sap.ui.layout"
+          xmlns:mvc="sap.ui.core.mvc" 
+          displayBlock="true">
+
+    <Page title="{i18n>details}">
+        <content>
+            <Table id="orderDetails"
+                   items="{
+                           path: '/Centros',
+                           sorter: {
+                              path: '/OrdenId',
+                              descending: 'true'
+                           }
+                           }"
+                    growing="true"
+                    growingThreshold="100"
+                    growingScrollToLoad="true">
+            
+                <columns >
+                    <Column>
+                        <Label text="{i18n>ordenId}"/>
+                    </Column>
+
+                    <Column >
+                        <Label text="{i18n>weight}"/>
+                    </Column>
+
+                    <Column >
+                        <Label text="{i18n>operation}"/>
+                    </Column>
+
+                    <Column >
+                        <Label text="{i18n>notificationQty}"/>
+                    </Column>
+
+                    <Column >
+                        <Label text="{i18n>unit1}"/>
+                    </Column>
+                    
+                </columns>
+
+                <items>
+                    <ColumnListItem >
+                        <ObjectIdentifier title="{Orders}"/>
+                        <cells>
+                            <Text text="{OrdenId}"/>
+                            <Text text="Weight"/>
+                            <Text text="Operation"/>
+                            <Text text="NotificationQty"/>
+                            <Text text="Unit1"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

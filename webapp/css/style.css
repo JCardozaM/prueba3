@@ -1,0 +1,15 @@
+/* Enter your custom styles here */
+
+.myIconTabBarClass .sapMITBHead {
+    display: flex;
+    justify-content: space-between;
+}
+
+.size2 {
+	font-size : 1.5rem;
+}
+
+.fontweight {
+    font-weight : bolder;
+    color: #356;
+}

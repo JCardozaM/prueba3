@@ -1,0 +1,174 @@
+<mvc:View controllerName="list.controller.App" 
+          xmlns="sap.m" 
+          xmlns:core="sap.ui.core" 
+          xmlns:layout="sap.ui.layout"
+          xmlns:mvc="sap.ui.core.mvc" 
+          xmlns:mc="sap.suite.ui.microchart"
+          displayBlock="true">
+    <Shell>
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}">
+                    <content>
+                        <IconTabBar class="myIconTabBarClass">
+                            <items>
+                                <IconTabFilter text="{i18n>objectList}" icon="sap-icon://activities" iconColor="Positive">
+                                    <List
+                                        items="{
+                                                path:'/Products',
+                                                filters:[
+                                                    {
+                                                        path:'Brand',
+                                                        operator:'EQ',
+                                                        value1: 'Compaq'
+                                                    },
+                                                    {
+                                                        path:'Brand',
+                                                        operator:'EQ',
+                                                        value1: 'American Crafts'
+                                                    }
+                                                ],
+                                                and: false
+                                            }"
+                                    >
+                                        <items>
+                                            <ObjectListItem title="{Material} {Brand} {Model}" number="{Price}" numberUnit="{Currency}" type="Active">
+                                                <attributes>
+                                                    <ObjectAttribute text="{Brand}" />
+                                                    <ObjectAttribute text="{Weight}" />
+                                                </attributes>
+                                            </ObjectListItem>
+                                        </items>
+                                    </List>
+                                </IconTabFilter>
+
+                                <IconTabFilter text="{i18n>standardList}" icon="sap-icon://list" iconColor="Positive">
+                                    <Select items="{/TypesSelection}" selectedKey="{/typeSelection}">
+                                        <items>
+                                            <core:Item key="{Type}" text="{Type}" />
+                                        </items>
+                                    </Select>
+
+                                    <Button text="{i18n>showSeletecItems}" press="onShowSelectedItems" class="sapUiSmallMarginEnd" />
+
+                                    <Button text="{i18n>deleteSelectedItems}" press="onDeleteSelectionItems" class="sapUiSmallMarginEnd" />
+
+                                    <List
+                                        id="standardList"
+                                        items="{
+                                            path:'/Products',
+                                            sorter:{
+                                                path:'Brand',
+                                                descending: false,
+                                                group: true
+                                            },
+                                            groupHeaderFactory: '.getGroupHeader'
+                                        }"
+                                        mode="{/typeSelection}"
+                                    >
+                                        <items>
+                                            <StandardListItem title="{Material} {Brand} {Model}" description="{Weight}" info="{Price} {Currency}" type="Active" />
+                                        </items>
+                                    </List>
+                                </IconTabFilter>
+
+                                <IconTabFilter text="{i18n>inputList}" icon="sap-icon://feed">
+                                    <List items="{/Products}" mode="Delete" delete="onDeleteItem">
+                                        <items>
+                                            <InputListItem label="{Brand}">
+                                                <Select items="{Properties}">
+                                                    <core:Item key="{Id}" text="{Text}" />
+                                                </Select>
+                                            </InputListItem>
+                                        </items>
+                                    </List>
+                                </IconTabFilter>
+
+                                <IconTabFilter text="{i18n>notificationList}" icon="sap-icon://menu" iconColor="Negative">
+                                    <List items="{/News}">
+                                        <items>
+                                            <NotificationListItem title="{Title}" description="{Descripiton}" unread="{Unread}" authorName="{Author}" priority="{Priority}" showCloseButton="{ShowCloseButton}"/>
+                                        </items>
+                                    </List>
+                                </IconTabFilter>
+
+                                <IconTabFilter text="{i18n>customList}" icon="sap-icon://checklist-item-2" iconColor="Critical">
+                                    <List items="{/News}">
+                                        <items>
+                                            <CustomListItem>
+                                                <layout:Grid>
+                                                    <Text text="{Title}" />
+                                                    <Text text="{Author}" />
+                                                    <Text text="{Description}" />
+                                                </layout:Grid>
+                                            </CustomListItem>
+                                        </items>
+                                    </List>
+                                </IconTabFilter>
+
+                                <IconTabFilter text="{i18n>plants}" icon="sap-icon://factory" count="{/WeightTotal/0/TotalKg} {/WeightTotal/0/Unit}" class="sapUiSmallMaginEnd">
+                                    <Panel  expandable="true" expanded="true">
+                                        <headerToolbar >
+                                            <OverflowToolbar >
+                                                <Title  text="{i18n>globalProduction}: {/WeightTotal/0/TotalKg} {/WeightTotal/0/Unit}" class="fontweight"/>
+                                            </OverflowToolbar>
+                                        </headerToolbar>
+                                        <layout:HorizontalLayout>
+
+                                        </layout:HorizontalLayout>
+
+                                        <FlexBox width="35rem" height="10rem"  alignItems="Center" justifyContent="SpaceBetween">
+                                            <items>
+                                                <mc:InteractiveDonutChart selectionChanged="onSelectionChanged" displayedSegments="4" press="press">
+                                                    <mc:segments>
+                                                        <mc:InteractiveDonutChartSegment label="4011-ALDAMA" value="31.3" displayedValue="31.3%"/>
+                                                        <mc:InteractiveDonutChartSegment label="4012-JUVENTINO ROSAS" value="35.47" displayedValue="35.47%"/>
+                                                        <mc:InteractiveDonutChartSegment label="4014-COSMOS" value="17.85" displayedValue="17.85%"/>
+                                                        <mc:InteractiveDonutChartSegment label="4015-AQUILES SERDAN" value="15.38" displayedValue="15.38%"/>
+                                                    </mc:segments>
+                                                </mc:InteractiveDonutChart>
+                                            </items>
+                                        </FlexBox>
+
+                                    </Panel>
+                                    <List items="{/Centros}">
+                                        <items>
+                                            <ObjectListItem title="{CentroId}: {Name}, {Estate}" 
+                                                            icon="sap-icon://factory"
+                                                            class="size2" 
+                                                            number="{WeightTotal}" 
+                                                            numberUnit="Kgs" 
+                                                            type="Navigation" 
+                                                            press="onNavToDetails"/>
+                                        </items>
+                                    </List>
+                                </IconTabFilter>
+
+                                <IconTabFilter text="{i18n>juliosList}" icon="sap-icon://inventory" count="9999">
+                                    <Panel   >
+                                        <headerToolbar >
+                                        <Toolbar>
+                                                <Title  text="{i18n>globalProduction}: {/Total/0/TotalKg} {/Total/0/Unit}"/>
+                                                <ToolbarSpacer/>
+                                                <Button text="{i18n>BtnSumarWeights}" type="Success" icon="sap-icon://add" press=".SumarPropertiesWeight" />
+                                                <Button text="{i18n>BtnEliminarSuma}" type="Critical" icon="sap-icon://sys-cancel-2" press=".LimpiarSumaPropWeight" />
+                                                </Toolbar>
+                                        </headerToolbar>
+                                        <layout:HorizontalLayout>
+
+                                        </layout:HorizontalLayout>
+                                    </Panel>
+                                    <List items="{/Products}">
+                                        <items>
+                                            <ObjectListItem title="{Material} {Brand} {Model}" number="{Weight}" numberUnit="Kg" type="Active" />
+                                        </items>
+                                    </List>
+                                </IconTabFilter>
+                            </items>
+                        </IconTabBar>
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>
